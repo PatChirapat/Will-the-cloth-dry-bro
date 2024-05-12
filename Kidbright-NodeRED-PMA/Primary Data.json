@@ -1,0 +1,915 @@
+[
+    {
+        "id": "37d471ca5e79713d",
+        "type": "tab",
+        "label": "Pat & Arm primary data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6841a89c5706364f",
+        "type": "mqtt in",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "topic": "b6510545306/checker",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "d387f313e2707ab4",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "09f2a965d7acb6b7"
+            ]
+        ]
+    },
+    {
+        "id": "09f2a965d7acb6b7",
+        "type": "debug",
+        "z": "37d471ca5e79713d",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c3eab28a43b182f1",
+        "type": "mysql",
+        "z": "37d471ca5e79713d",
+        "mydb": "79dc15622e3d4fc8",
+        "name": "",
+        "x": 740,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b88fc9cc3d0abf8",
+        "type": "inject",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT * FROM kidbright ORDER BY ts DESC LIMIT 5;",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 160,
+        "wires": [
+            [
+                "c11fcdee9e75032e"
+            ]
+        ]
+    },
+    {
+        "id": "7e70aed1d04d987d",
+        "type": "debug",
+        "z": "37d471ca5e79713d",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "c11fcdee9e75032e",
+        "type": "mysql",
+        "z": "37d471ca5e79713d",
+        "mydb": "79dc15622e3d4fc8",
+        "name": "",
+        "x": 460,
+        "y": 160,
+        "wires": [
+            [
+                "7e70aed1d04d987d",
+                "ca815bd03b3f76dd"
+            ]
+        ]
+    },
+    {
+        "id": "7bb7b039d81d7ce8",
+        "type": "mqtt in",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "topic": "b6510545306/clothesdrying",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "d387f313e2707ab4",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 300,
+        "wires": [
+            [
+                "b410e83b57fa5eb8",
+                "31d7d3d0cea1886b",
+                "7f63167ebfb41ddd",
+                "7d43d8233b2d742c",
+                "7095bd8dfb5ba958"
+            ]
+        ]
+    },
+    {
+        "id": "31d7d3d0cea1886b",
+        "type": "change",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.light",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 360,
+        "wires": [
+            [
+                "17ec7496c29dccd9"
+            ]
+        ]
+    },
+    {
+        "id": "b410e83b57fa5eb8",
+        "type": "debug",
+        "z": "37d471ca5e79713d",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "7f63167ebfb41ddd",
+        "type": "change",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temperature",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 420,
+        "wires": [
+            [
+                "ff0b372a0f21f3fb"
+            ]
+        ]
+    },
+    {
+        "id": "7d43d8233b2d742c",
+        "type": "template",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "sql",
+        "syntax": "mustache",
+        "template": "INSERT INTO clothesdrying (lat, lon, light, clothestemp, clotheshumidity)\nVALUES (\n    {{payload.lat}},\n    {{payload.lon}},\n    {{payload.light}},\n    {{payload.temperature}},\n    {{payload.humidity}}\n)",
+        "output": "str",
+        "x": 440,
+        "y": 300,
+        "wires": [
+            [
+                "c3eab28a43b182f1"
+            ]
+        ]
+    },
+    {
+        "id": "ca815bd03b3f76dd",
+        "type": "change",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 200,
+        "wires": [
+            [
+                "ce25630c2c475b0b"
+            ]
+        ]
+    },
+    {
+        "id": "8d8e23311fda9486",
+        "type": "mysql",
+        "z": "37d471ca5e79713d",
+        "mydb": "79dc15622e3d4fc8",
+        "name": "",
+        "x": 460,
+        "y": 780,
+        "wires": [
+            [
+                "fce76be52b1a2f4a"
+            ]
+        ]
+    },
+    {
+        "id": "2e74b3717c3e930e",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Average Temperature",
+        "format": "{{msg.payload.temp_avg}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1020,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "fce76be52b1a2f4a",
+        "type": "change",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 780,
+        "wires": [
+            [
+                "2e74b3717c3e930e",
+                "ce36419d3ea1821d",
+                "c7829cd869038602",
+                "e9199ea971b6aed8"
+            ]
+        ]
+    },
+    {
+        "id": "82d83a8ee44bcebf",
+        "type": "inject",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT ROUND(AVG(subq.clothestemp), 2) as temp_avg, MIN(subq.clothestemp) as temp_min, MAX(subq.clothestemp) as temp_max FROM (SELECT * FROM clothesdrying ORDER BY ts DESC LIMIT 6) AS subq;",
+        "payload": "AvgTemp",
+        "payloadType": "str",
+        "x": 120,
+        "y": 780,
+        "wires": [
+            [
+                "8d8e23311fda9486"
+            ]
+        ]
+    },
+    {
+        "id": "ce36419d3ea1821d",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Maximum Temperature",
+        "format": "{{msg.payload.temp_max}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1030,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "c7829cd869038602",
+        "type": "debug",
+        "z": "37d471ca5e79713d",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "c05a8022acc74d18",
+        "type": "mysql",
+        "z": "37d471ca5e79713d",
+        "mydb": "79dc15622e3d4fc8",
+        "name": "",
+        "x": 460,
+        "y": 600,
+        "wires": [
+            [
+                "ce4bd98f4de58754"
+            ]
+        ]
+    },
+    {
+        "id": "7fc6ad6322b39534",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 11,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Average Light",
+        "format": "{{msg.payload.light_avg}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1000,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "ce4bd98f4de58754",
+        "type": "change",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 600,
+        "wires": [
+            [
+                "7fc6ad6322b39534",
+                "13e3b2fd368b1db0",
+                "dc8035e34b73d6ea",
+                "8a4d5cb1d399669e"
+            ]
+        ]
+    },
+    {
+        "id": "e9308b1ad267269c",
+        "type": "inject",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT ROUND(AVG(subq.light), 2) as light_avg, MIN(subq.light) as light_min, MAX(subq.light) as light_max FROM (SELECT * FROM clothesdrying ORDER BY ts DESC LIMIT 6) AS subq;",
+        "payload": "AvgLight",
+        "payloadType": "str",
+        "x": 120,
+        "y": 600,
+        "wires": [
+            [
+                "c05a8022acc74d18"
+            ]
+        ]
+    },
+    {
+        "id": "13e3b2fd368b1db0",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 13,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Maximum Light",
+        "format": "{{msg.payload.light_max}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1000,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "dc8035e34b73d6ea",
+        "type": "debug",
+        "z": "37d471ca5e79713d",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "9921e321c6eddd4d",
+        "type": "mysql",
+        "z": "37d471ca5e79713d",
+        "mydb": "79dc15622e3d4fc8",
+        "name": "",
+        "x": 460,
+        "y": 960,
+        "wires": [
+            [
+                "21cea1a89f45f7c0"
+            ]
+        ]
+    },
+    {
+        "id": "379c643306d990ea",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Average Humidity",
+        "format": "{{msg.payload.humidity_avg}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1010,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "21cea1a89f45f7c0",
+        "type": "change",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 740,
+        "y": 960,
+        "wires": [
+            [
+                "379c643306d990ea",
+                "4c921ce00868e9d0",
+                "09b81ded8056d41d",
+                "5d63b123ef56b345"
+            ]
+        ]
+    },
+    {
+        "id": "7f886ba2501a820f",
+        "type": "inject",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT ROUND(AVG(subq.clotheshumidity), 2) as humidity_avg, MIN(subq.clotheshumidity) as humidity_min, MAX(subq.clotheshumidity) as humidity_max FROM (SELECT * FROM clothesdrying ORDER BY ts DESC LIMIT 6) AS subq;",
+        "payload": "AvgHumidity",
+        "payloadType": "str",
+        "x": 140,
+        "y": 960,
+        "wires": [
+            [
+                "9921e321c6eddd4d"
+            ]
+        ]
+    },
+    {
+        "id": "09b81ded8056d41d",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Minimum Humidity",
+        "format": "{{msg.payload.humidity_min}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1010,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "4c921ce00868e9d0",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Maximum Humidity",
+        "format": "{{msg.payload.humidity_max}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1010,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "5d63b123ef56b345",
+        "type": "debug",
+        "z": "37d471ca5e79713d",
+        "name": "msg.payload",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "7095bd8dfb5ba958",
+        "type": "change",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.humidity",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 480,
+        "wires": [
+            [
+                "188fb5acf9b6e8d3"
+            ]
+        ]
+    },
+    {
+        "id": "e9199ea971b6aed8",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Minimum Temperature",
+        "format": "{{msg.payload.temp_min}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1020,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "8a4d5cb1d399669e",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 12,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Minimum Light",
+        "format": "{{msg.payload.light_min}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1000,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "ce25630c2c475b0b",
+        "type": "ui_text",
+        "z": "37d471ca5e79713d",
+        "group": "5561ae90831bbe3d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Timestamp",
+        "format": "{{msg.payload.ts}}",
+        "layout": "col-center",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 930,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "17ec7496c29dccd9",
+        "type": "ui_gauge",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "group": "5561ae90831bbe3d",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Light",
+        "label": "Lux",
+        "format": "{{msg.payload}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 710,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "ff0b372a0f21f3fb",
+        "type": "ui_gauge",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "group": "5561ae90831bbe3d",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "Celsius",
+        "format": "{{msg.payload}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 730,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "188fb5acf9b6e8d3",
+        "type": "ui_gauge",
+        "z": "37d471ca5e79713d",
+        "name": "",
+        "group": "5561ae90831bbe3d",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "RH",
+        "format": "{{msg.payload}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 720,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "d387f313e2707ab4",
+        "type": "mqtt-broker",
+        "name": "CPE IOT",
+        "broker": "iot.cpe.ku.ac.th",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "79dc15622e3d4fc8",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "iot.cpe.ku.ac.th",
+        "port": "3306",
+        "db": "b6510545306",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "5561ae90831bbe3d",
+        "type": "ui_group",
+        "name": "Pat & Arm",
+        "tab": "5ee951de1e4451ce",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "5ee951de1e4451ce",
+        "type": "ui_tab",
+        "name": "Real Home",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]

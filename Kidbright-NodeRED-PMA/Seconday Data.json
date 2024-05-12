@@ -1,0 +1,138 @@
+[
+    {
+        "id": "2a4b74f82a4a65aa",
+        "type": "tab",
+        "label": "Pat & Arm TMD for project",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "098a15371f9213eb",
+        "type": "inject",
+        "z": "2a4b74f82a4a65aa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10800",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 220,
+        "wires": [
+            [
+                "90fc58ed14e761aa"
+            ]
+        ]
+    },
+    {
+        "id": "90fc58ed14e761aa",
+        "type": "http request",
+        "z": "2a4b74f82a4a65aa",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://data.tmd.go.th/api/Weather3Hours/V2/?uid=api&ukey=api12345&format=json",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "be95bb0c502ce508"
+            ]
+        ]
+    },
+    {
+        "id": "be95bb0c502ce508",
+        "type": "json",
+        "z": "2a4b74f82a4a65aa",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 530,
+        "y": 220,
+        "wires": [
+            [
+                "65ab4bcaaf4da60c",
+                "72633de68c9249fc"
+            ]
+        ]
+    },
+    {
+        "id": "65ab4bcaaf4da60c",
+        "type": "function",
+        "z": "2a4b74f82a4a65aa",
+        "name": "function 3",
+        "func": "const n = \"48456\";\nconst pl = msg.payload.Stations.Station.find(s => s.WmoStationNumber === n); \nlet d = pl ? pl : null; \nmsg.topic = `INSERT INTO tmd_project (ts, lat, lon, temp, airhumidity, rainfall) \n    VALUES (?, ?, ?, ?, ?, ?)`; \nlet rd = d.Observation.DateTime; \nlet sd = rd.split(' '); \nlet tt = sd[1]; \nlet ddr = sd[0]; \nlet dd = ddr.split('/'); \nmsg.payload = [`${dd[2]}-${dd[0]}-${dd[1]} ` + tt, d.Latitude, d.Longitude, d.Observation.AirTemperature, d.Observation.RelativeHumidity, d.Observation.Rainfall]; \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 220,
+        "wires": [
+            [
+                "59a24dab91869082"
+            ]
+        ]
+    },
+    {
+        "id": "72633de68c9249fc",
+        "type": "debug",
+        "z": "2a4b74f82a4a65aa",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "59a24dab91869082",
+        "type": "mysql",
+        "z": "2a4b74f82a4a65aa",
+        "mydb": "79dc15622e3d4fc8",
+        "name": "",
+        "x": 880,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "79dc15622e3d4fc8",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "iot.cpe.ku.ac.th",
+        "port": "3306",
+        "db": "b6510545306",
+        "tz": "",
+        "charset": "UTF8"
+    }
+]
