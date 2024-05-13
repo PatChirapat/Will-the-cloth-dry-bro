@@ -1,0 +1,164 @@
+openapi: 3.0.0
+info:
+  title: Clothes Drying API
+  description: This API provides data for cloth drying.
+  version: 1.0.0
+servers:
+- url: http://127.0.0.1:8080/clothdrying-api/v1
+paths:
+  /clothdryingintegrated:
+    get:
+      summary: Returns a list of cloth drying data.
+      operationId: controller_get_clothdryingintegrated
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClothDryingIntegrated'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /clothdryingintegrated/{id}:
+    get:
+      summary: Returns complete details of the cloth drying data with the specified
+        ID.
+      operationId: controller_get_clothdryingintegrated_by_id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClothDryingIntegrated'
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /clothdryingintegrated/sensor/{sensorId}:
+    get:
+      summary: Returns cloth drying data filtered by sensor.
+      operationId: controller_get_clothdryingintegrated_by_sensor
+      parameters:
+      - name: sensorId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClothDryingIntegrated'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /clothdryingintegrated/source/{source}:
+    get:
+      summary: Returns cloth drying data filtered by source.
+      operationId: controller_get_clothdryingintegrated_by_source
+      parameters:
+      - name: source
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClothDryingIntegrated'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /clothdryingintegrated/sensor/{sensorId}/source/{source}:
+    get:
+      summary: Returns cloth drying data filtered by sensor and source.
+      operationId: controller_get_clothdryingintegrated_by_sensor_and_source
+      parameters:
+      - name: sensorId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: source
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClothDryingIntegrated'
+                x-content-type: application/json
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas:
+    ClothDryingIntegrated:
+      type: object
+      properties:
+        id:
+          type: integer
+        ts:
+          type: string
+          description: Timestamp of the data
+          format: date-time
+        lat:
+          type: number
+          description: Latitude
+          format: float
+        lon:
+          type: number
+          description: Longitude
+          format: float
+        sensor:
+          type: string
+          description: Sensor identifier
+        source:
+          type: string
+          description: Source of the data
+        value:
+          type: number
+          description: Value of the cloth drying data
+          format: float
+      example:
+        lon: 1.4658129
+        sensor: sensor
+        id: 0
+        source: source
+        value: 5.962134
+        lat: 6.0274563
+        ts: 2000-01-23T04:56:07.000+00:00
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+

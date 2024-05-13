@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  title: Clothes Drying API
+  description: This API provides data for cloth drying.
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8080/clothdrying-api/v1
+paths:
+  /clothdryingintegrated:
+    get:
+      summary: Returns a list of cloth drying data.
+      operationId: controller.get_clothdryingintegrated
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClothDryingIntegrated'
+  /clothdryingintegrated/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Returns complete details of the cloth drying data with the specified ID.
+      operationId: controller.get_clothdryingintegrated_by_id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClothDryingIntegrated'
+  /clothdryingintegrated/sensor/{sensorId}:
+    parameters:
+      - name: sensorId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Returns cloth drying data filtered by sensor.
+      operationId: controller.get_clothdryingintegrated_by_sensor
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClothDryingIntegrated'
+  /clothdryingintegrated/source/{source}:
+    parameters:
+      - name: source
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Returns cloth drying data filtered by source.
+      operationId: controller.get_clothdryingintegrated_by_source
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClothDryingIntegrated'
+  /clothdryingintegrated/sensor/{sensorId}/source/{source}:
+    parameters:
+      - name: sensorId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: source
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Returns cloth drying data filtered by sensor and source.
+      operationId: controller.get_clothdryingintegrated_by_sensor_and_source
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClothDryingIntegrated'
+components:
+  schemas:
+    ClothDryingIntegrated:
+      type: object
+      properties:
+        id:
+          type: integer
+        ts:
+          type: string
+          format: date-time
+          description: Timestamp of the data
+        lat:
+          type: number
+          format: float
+          description: Latitude
+        lon:
+          type: number
+          format: float
+          description: Longitude
+        sensor:
+          type: string
+          description: Sensor identifier
+        source:
+          type: string
+          description: Source of the data
+        value:
+          type: number
+          format: float
+          description: Value of the cloth drying data
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
