@@ -8,7 +8,7 @@ SELECT
     'light' AS sensor,
     'clothesdrying' AS source,
     ROUND(AVG(light), 5) AS value
-FROM clothesdrying
+FROM b6510545306.clothesdrying
 GROUP BY TIMESTAMPDIFF(HOUR, '2020-01-01 00:00:00', ts) DIV 3;
 
 -- Insert clotheshumidity data into table
@@ -20,7 +20,7 @@ SELECT
     'clotheshumidity' AS sensor,
     'clothesdrying' AS source,
     ROUND(AVG(clotheshumidity), 5) AS value
-FROM clothesdrying
+FROM b6510545306.clothesdrying
 GROUP BY TIMESTAMPDIFF(HOUR, '2020-01-01 00:00:00', ts) DIV 3;
 
 -- Insert clothestemp data into table
@@ -32,7 +32,7 @@ SELECT
     'clothestemp' AS sensor,
     'clothesdrying' AS source,
     ROUND(AVG(clothestemp), 5) AS value
-FROM clothesdrying
+FROM b6510545306.clothesdrying
 GROUP BY TIMESTAMPDIFF(HOUR, '2020-01-01 00:00:00', ts) DIV 3;
 
 -- tmd_project table (temp, airhumidity	, rainfall)
@@ -45,7 +45,7 @@ SELECT
     'temp' AS sensor,
     'tmd_project' AS source,
     ROUND(AVG(temp), 5) AS value
-FROM tmd_project
+FROM b6510545306.tmd_project
 GROUP BY TIMESTAMPDIFF(HOUR, '2020-01-01 00:00:00', ts) DIV 3;
 
 -- Insert airhumidity data into table
@@ -57,7 +57,7 @@ SELECT
     'airhumidity' AS sensor,
     'tmd_project' AS source,
     ROUND(AVG(airhumidity), 5) AS value
-FROM tmd_project
+FROM b6510545306.tmd_project
 GROUP BY TIMESTAMPDIFF(HOUR, '2020-01-01 00:00:00', ts) DIV 3;
 
 -- Insert rainfall data into table
@@ -69,5 +69,5 @@ SELECT
     'rainfall' AS sensor,
     'tmd_project' AS source,
     SUM(rainfall) AS value
-FROM tmd_project
+FROM b6510545306.tmd_project
 GROUP BY TIMESTAMPDIFF(HOUR, '2020-01-01 00:00:00', ts) DIV 3;
